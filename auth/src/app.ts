@@ -1,7 +1,6 @@
 import express from "express";
 import "express-async-errors";
 import { json } from "body-parser";
-import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 
 import { currentUserRouter } from "./routes/current_user";
@@ -18,8 +17,8 @@ app.set("trust-proxy", true);
 
 app.use(json());
 app.use(cookieSession({
-    signed: false,                          // no encryption for content
-    secure: process.env.NODE_ENV !== "test" // only https allowed
+    signed: false,  // no encryption for content
+    secure: false   // only https allowed
 }));
 
 app.use(currentUserRouter);
