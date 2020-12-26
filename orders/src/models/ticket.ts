@@ -3,6 +3,7 @@ import { Order } from "./order";
 import { OrderStatus } from "@francofrancos/common";
 
 interface TicketAttrs {
+    id: string;
     title: string;
     price: number;
 }
@@ -36,10 +37,12 @@ const ticketSchema = new mongoose.Schema({
     }
 });
 
-const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", ticketSchema);
-
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
-    return new Ticket(attrs);
+    return new Ticket({
+        _id: attrs.id,
+        title: attrs.title,
+        price: attrs.price
+    });
 };
 
 ticketSchema.statics.isReserved = async function() {
@@ -56,5 +59,7 @@ ticketSchema.statics.isReserved = async function() {
 
     return !!order;
 }
+
+const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", ticketSchema);
 
 export { Ticket };
