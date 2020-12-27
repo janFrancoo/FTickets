@@ -23,7 +23,7 @@ router.post("/api/orders", requireAuth, [
     if (!ticket)
         throw new NotFoundError();
 
-    if (ticket.isReserved())
+    if (await ticket.isReserved())
         throw new BadRequestError("Ticket is reserved");
 
     const expiration = new Date();

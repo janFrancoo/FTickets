@@ -58,7 +58,7 @@ ticketSchema.statics.findByEvent = (event: { id: string, version: number }) => {
     });
 };
 
-ticketSchema.statics.isReserved = async function() {
+ticketSchema.methods.isReserved = async function() {
     const order = await Order.findOne({
         ticket: this,
         status: {
