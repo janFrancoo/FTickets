@@ -4,6 +4,8 @@ export default ({ currentUser }) => {
     const links = [
         !currentUser && { label: "Sign up", href: "/auth/signup" },
         !currentUser && { label: "Sign in", href: "/auth/signin" },
+        currentUser && { label: "Sell tickets", href: "/tickets/new" },
+        currentUser && { label: "My orders", href: "/orders" },
         currentUser && { label: "Sign out", href: "/auth/signout" }
     ]
     .filter(link => link)
@@ -18,7 +20,7 @@ export default ({ currentUser }) => {
     });
 
     return (
-        <nav className="navbar navbar-light bg-light">
+        <nav className="navbar navbar-light bg-light mb-3">
             <Link href="/">
                 <a className="navbar-brand">Tickets</a>
             </Link>

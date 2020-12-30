@@ -6,7 +6,9 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
     return (
         <div>
             <Header currentUser={currentUser} />
-            <Component {...pageProps} />
+            <div className="container">
+                <Component currentUser={currentUser} {...pageProps} />
+            </div>
         </div>
     );
 };
@@ -19,11 +21,13 @@ come from another domain -> ssr
 navigating in app -> csr
 */
 AppComponent.getInitialProps = async (appContext) => {
-    const { data } = await buildClient(appContext.ctx).get("/api/users/current-user");
+    const client = buildClient(appContext.ctx);
+    const { data } = await client.get("/api/users/current-user");
     
     let pageProps = {};
     if (appContext.Component.getInitialProps)
-        pageProps = await appContext.Component.getInitialProps(appContext.ctx); // for to call getInitialProps multiple times for pages
+        pageProps = await appContext.Component.getInitialProps(appContext.ctx, client, data.currentUser); 
+        // for to call getInitialProps multiple times for pages
     
     return {
         pageProps,
